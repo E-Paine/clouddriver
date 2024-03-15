@@ -181,11 +181,11 @@ class EcsLoadBalancerProviderSpec extends Specification {
 
     loadBalancerList.size() == 2
     for (EcsLoadBalancer lb : loadBalancerList) {
-      lb.targetGroupServices.size() == 1
-      lb.targetGroups.size() == 1
+      assert lb.targetGroupServices.size() == 2
+      assert lb.targetGroups.size() == 1
 
       def tgArn = lb.targetGroups[0].getTargetGroupArn()
-      lb.targetGroupServices[tgArn][0] == ecsService.getServiceName()
+      assert lb.targetGroupServices[tgArn][0] == ecsService.getServiceName()
     }
   }
 

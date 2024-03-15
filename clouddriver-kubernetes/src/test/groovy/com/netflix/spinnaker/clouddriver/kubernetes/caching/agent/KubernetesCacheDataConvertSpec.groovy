@@ -88,22 +88,18 @@ metadata:
     }).findFirst()
 
     then:
-    if (application == null) {
-      true
+    optional.isPresent()
+    def cacheData = optional.get()
+    cacheData.relationships.get(Keys.LogicalKind.APPLICATIONS.toString()) as List == [Keys.ApplicationCacheKey.createKey(application)]
+    if (cluster) {
+      assert cacheData.relationships.get(Keys.LogicalKind.CLUSTERS.toString()) as List == [Keys.ClusterCacheKey.createKey(account, application, cluster)]
     } else {
-      optional.isPresent()
-      def cacheData = optional.get()
-      cacheData.relationships.get(Keys.LogicalKind.APPLICATIONS.toString()) == [Keys.ApplicationCacheKey.createKey(application)]
-      if (cluster) {
-        cacheData.relationships.get(Keys.LogicalKind.CLUSTERS.toString()) == [Keys.ClusterCacheKey.createKey(account, application, cluster)]
-      } else {
-        cacheData.relationships.get(Keys.LogicalKind.CLUSTERS.toString()) == null
-      }
-      cacheData.attributes.get("name") == name
-      cacheData.attributes.get("namespace") == namespace
-      cacheData.attributes.get("kind") == kind
-      cacheData.id == Keys.InfrastructureCacheKey.createKey(kind, account, namespace, name)
+      assert cacheData.relationships.get(Keys.LogicalKind.CLUSTERS.toString()) == null
     }
+    cacheData.attributes.get("name") == name
+    cacheData.attributes.get("namespace") == namespace
+    cacheData.attributes.get("kind") == kind
+    cacheData.id == Keys.InfrastructureCacheKey.createKey(kind, account, namespace, name)
 
     where:
     kind                       | apiVersion                              | account           | application | cluster       | namespace        | name

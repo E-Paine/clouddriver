@@ -111,11 +111,11 @@ class TargetHealthCachingAgentSpec extends Specification {
     EcsTargetHealth targetHealth = targetHealthList.get(0)
     targetHealth.getTargetGroupArn() == targetGroupArn
     for (TargetHealthDescription targetHealthDescription: targetHealth.getTargetHealthDescriptions()) {
-      targetHealthDescription.getTarget().getPort() == 80
+      assert targetHealthDescription.getTarget().getPort() == 80
       if (targetHealthDescription.getTarget().getId() == healthyTargetId) {
-        targetHealthDescription.getTargetHealth().getState() == TargetHealthStateEnum.Healthy.toString()
+        assert targetHealthDescription.getTargetHealth().getState() == TargetHealthStateEnum.Healthy.toString()
       } else {
-        targetHealthDescription.getTargetHealth().getState() == TargetHealthStateEnum.Unhealthy.toString()
+        assert targetHealthDescription.getTargetHealth().getState() == TargetHealthStateEnum.Unhealthy.toString()
       }
     }
   }

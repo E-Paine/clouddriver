@@ -46,13 +46,13 @@ class ResizeServiceAtomicOperationConverterSpec extends Specification {
 
     when:
     def description = converter.convertDescription(input)
+
+    then:
+    description instanceof ResizeServiceDescription
     description.getServerGroupName() == input['serverGroupName']
     description.getCapacity().getDesired() == input['capacity']['desired']
     description.getCapacity().getMin() == input['capacity']['min']
     description.getCapacity().getMax() == input['capacity']['max']
-
-    then:
-    description instanceof ResizeServiceDescription
 
     when:
     def operation = converter.convertOperation(input)

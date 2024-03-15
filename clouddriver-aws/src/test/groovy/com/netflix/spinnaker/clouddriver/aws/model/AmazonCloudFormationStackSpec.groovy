@@ -63,11 +63,11 @@ class AmazonCloudFormationStackSpec extends Specification {
       accountId == "accountId"
       stackStatus == "stackStatus"
       stackStatusReason == "stackStatusReason"
-      cf.changeSets.each {
-        it.name == "name"
-        it.status == "status"
-        it.statusReason == "statusReason"
-        it.changes.size() == 1
+      cf.changeSets.every {
+        it.name == "name" &&
+        it.status == "status" &&
+        it.statusReason == "statusReason" &&
+        it.changes.size() == 1 &&
         it.changes.get(0).type == "type"
       }
     }

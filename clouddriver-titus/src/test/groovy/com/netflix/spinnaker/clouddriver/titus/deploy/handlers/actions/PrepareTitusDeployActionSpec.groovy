@@ -205,12 +205,7 @@ class PrepareTitusDeployActionSpec extends Specification {
     then:
     awsLookupUtil.securityGroupIdExists(_, _, sg1Id) >> true
     awsLookupUtil.convertSecurityGroupNameToId(_, _, sg2Name) >> sg2Id
-
-    if (includesAppGroup) {
-      description.securityGroups == [sg1Id, sg2Id]
-    } else {
-      description.securityGroups == [sg1Id]
-    }
+    description.securityGroups == (includesAppGroup ? [sg1Id, sg2Id] : [sg1Id])
 
     where:
     labelValue | descriptionValue || includesAppGroup

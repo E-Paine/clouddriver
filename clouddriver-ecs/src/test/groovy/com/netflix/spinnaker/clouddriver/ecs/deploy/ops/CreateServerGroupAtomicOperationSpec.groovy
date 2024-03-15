@@ -807,15 +807,15 @@ class CreateServerGroupAtomicOperationSpec extends CommonAtomicOperation {
     logsContainer.memoryReservation == 1024
 
     result.getContainerDefinitions().forEach({
-      it.environment.size() == 3
+      assert it.environment.size() == 3
 
       def environments = [:]
       for(elem in it.environment){
         environments.put(elem.getName(), elem.getValue())
       }
-      environments.get("SERVER_GROUP") == "v1-ecs-test-v001"
-      environments.get("CLOUD_STACK") == "ecs"
-      environments.get("CLOUD_DETAIL") == "test"
+      assert environments.get("SERVER_GROUP") == "v1-ecs-test-v001"
+      assert environments.get("CLOUD_STACK") == "ecs"
+      assert environments.get("CLOUD_DETAIL") == "test"
     })
   }
 

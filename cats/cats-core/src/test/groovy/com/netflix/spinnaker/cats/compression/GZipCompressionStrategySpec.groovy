@@ -27,11 +27,7 @@ class GZipCompressionStrategySpec extends Specification {
     def result = subject.compress(data)
 
     then:
-    if (shouldCompress) {
-      result != data
-    } else {
-      result == data
-    }
+    (result == data) ^ shouldCompress
     subject.decompress(result) == data
 
     where:
